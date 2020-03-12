@@ -1,27 +1,30 @@
 import random
 
 class Deck:
-    #инициализация колоды
+
     def __init__(self):
+        self._suits = None
         self.__suits = ["\u2660", "\u2665", "\u2663", "\u2666"]
         self.__cards = ["6", "7", "8", "9", "10", "J", "Q", "K", "A"]
         self.deck={self.__cards[i]: i for i in range(len(self.__cards))}
         _ls_mix_deck=[]
-        # self._cards_dict = {__cards[i]: i for i in range(len(__cards))}
         self.all_deck = {}
         for i in range(len(self.__suits)):
             for key, values in self.deck.items():
                 key = self.__suits[i] + key
                 self.all_deck[key] = values
-    #Перемешивание колоды
+
+    #Тасуем
     def mix_deck(self):
         self._ls_mix_deck=list(self.all_deck)
         random.shuffle(self._ls_mix_deck)
-    #Раздача карт
+
+    #Выдача карт
     def hand_cards(self):
         self.player_hand = self._ls_mix_deck[-6:]
         self._computer_hand = self._ls_mix_deck[-12:-6]
         del self._ls_mix_deck[-12:]
+
     #Жребий кто ходит первым
     def first_turn(self):
         if random.randint(1, 2) == 1:
@@ -30,7 +33,8 @@ class Deck:
         else:
             print('Ходит Компьютер')
             return 'Ходит Компьютер'
-    #Игрок ходит
+
+    #Ход игрока
     def turn(self):
         print('Ваши карты:\n{}'.format(self.player_hand))
         self.player_card = []
@@ -41,7 +45,7 @@ class Deck:
         self.player_card.append(self.player_hand[self.player_choice])
         self.player_hand.remove(self.player_hand[self.player_choice])
 
-    #Компьютер отвечает
+    #Ход компьютера
     def computer_answer(self):
         self.answer_cards = []
         for card in self._computer_hand:
